@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erik Mortensen — Robotics Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0f0f0f; --white: #f5f3ee; --gray-1: #e8e6e0; --gray-2: #c8c5bc;
+    --gray-3: #8a877f; --gray-4: #3a3835;
+    --blue: #1a3a6b; --blue-light: #e8eef6;
+    --green: #1a4a2e; --green-light: #e6f0e9;
+    --gold: #8a6a1a; --gold-light: #f5f0e0;
+    --sans: 'Josefin Sans', sans-serif; --serif: 'EB Garamond', serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--white); color: var(--black); font-family: var(--serif); font-size: 17px; line-height: 1.75; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 4rem; background: var(--white); border-bottom: 1px solid var(--black); }
+  .nav-logo { font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--black); cursor: pointer; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-family: var(--sans); font-size: 10px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray-3); text-decoration: none; transition: color 0.2s; cursor: pointer; }
+  .nav-links a:hover { color: var(--black); }
+  .btn-primary { font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.9rem 2.25rem; background: var(--black); color: var(--white); text-decoration: none; display: inline-block; border: 1px solid var(--black); transition: background 0.2s; cursor: pointer; }
+  .btn-primary:hover { background: var(--gray-4); }
+  #main-page { display: block; }
+  #project-page { display: none; }
+  #intro { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--black); padding-top: 4rem; }
+  .intro-left { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 5rem 4rem; border-right: 1px solid var(--black); gap: 2rem; }
+  .profile-circle { width: 200px; height: 200px; border-radius: 50%; background: var(--black); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .profile-circle img { width: 100%; height: 100%; object-fit: cover; }
+  .profile-circle-placeholder { font-family: var(--sans); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-3); text-align: center; padding: 1rem; }
+  .intro-name { font-family: var(--sans); font-size: clamp(2.2rem, 4vw, 3.6rem); font-weight: 700; line-height: 1.5; letter-spacing: -0.01em; text-transform: uppercase; text-align: center; }
+  .intro-role { font-family: var(--sans); font-size: 10px; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gray-3); text-align: center; }
+  .intro-right { display: flex; flex-direction: column; justify-content: center; padding: 5rem 4rem; gap: 2.5rem; }
+  .intro-tagline { font-family: var(--serif); font-size: 1.25rem; font-style: italic; color: var(--gray-4); line-height: 1.8; max-width: 420px; }
+  .intro-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .intro-stats { display: flex; flex-direction: column; margin-top: 1rem; }
+  .intro-stat { display: flex; justify-content: space-between; align-items: baseline; padding: 0.75rem 0; border-bottom: 1px solid var(--gray-1); }
+  .intro-stat:first-child { border-top: 1px solid var(--gray-1); }
+  .stat-k { font-family: var(--sans); font-size: 10px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-3); }
+  .stat-v { font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--black); }
+  #about { border-bottom: 1px solid var(--black); }
+  .section-inner { max-width: 1100px; margin: 0 auto; padding: 5rem 4rem; }
+  .section-header { display: flex; align-items: baseline; gap: 2rem; margin-bottom: 5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--black); }
+  .section-num { font-family: var(--sans); font-size: 10px; font-weight: 400; letter-spacing: 0.2em; color: var(--gray-3); }
+  h2 { font-family: var(--sans); font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .timeline-wrap { display: flex; justify-content: center; }
+  .timeline { position: relative; display: flex; flex-direction: column; padding: 0 0 0 3.5rem; max-width: 680px; width: 100%; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: -26px; bottom: 0; width: 1px; background: var(--black); }
+  .timeline::after { content: ''; position: absolute; left: 2px; top: -38px; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 12px solid var(--black); }
+  .tl-item { position: relative; padding: 0 0 3.5rem 0; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot { position: absolute; left: -3.5rem; top: 4px; width: 18px; height: 18px; border-radius: 50%; background: var(--white); border: 2px solid var(--black); display: flex; align-items: center; justify-content: center; z-index: 1; }
+  .tl-dot-inner { width: 6px; height: 6px; border-radius: 50%; background: var(--white); }
+  .tl-date { font-family: var(--sans); font-size: 10px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-3); margin-bottom: 0.3rem; }
+  .tl-title { font-family: var(--sans); font-size: 1rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.2rem; }
+  .tl-org-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+  .tl-org { font-family: var(--serif); font-size: 0.95rem; font-style: italic; color: var(--gray-3); }
+  .tl-logos { display: flex; flex-direction: row; align-items: center; gap: 0.5rem; }
+  .tl-logo { height: 42px; width: auto; max-width: 105px; object-fit: contain; opacity: 0.75; transition: opacity 0.2s; }
+  .tl-logo.secondary { height: 30px; opacity: 0.5; }
+  .tl-logo:hover { opacity: 1; }
+  .tl-desc { font-family: var(--serif); font-size: 0.92rem; color: var(--gray-4); line-height: 1.7; max-width: 500px; }
+  .tl-badge { display: inline-block; font-family: var(--sans); font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.6rem; margin-bottom: 0.5rem; color: var(--blue); background: var(--blue-light); border: 1px solid rgba(74,114,176,0.3); }
+  #projects { border-bottom: 1px solid var(--black); }
+  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--black); border-left: 1px solid var(--black); }
+  .proj-thumb { border-right: 1px solid var(--black); border-bottom: 1px solid var(--black); aspect-ratio: 1/1; position: relative; overflow: hidden; cursor: pointer; background: var(--gray-1); display: flex; align-items: center; justify-content: center; }
+  .proj-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .proj-thumb:hover img { transform: scale(1.04); }
+  .proj-thumb-placeholder { font-size: 3rem; transition: transform 0.4s ease; }
+  .proj-thumb:hover .proj-thumb-placeholder { transform: scale(1.08); }
+  .proj-thumb-overlay { position: absolute; inset: 0; background: rgba(15,15,15,0.82); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; padding: 1.5rem; text-align: center; }
+  .proj-thumb:hover .proj-thumb-overlay { opacity: 1; }
+  .proj-thumb-title { font-family: var(--sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); margin-bottom: 0.5rem; line-height: 1.3; }
+  .proj-thumb-sub { font-family: var(--sans); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .proj-thumb-cta { margin-top: 1rem; font-family: var(--sans); font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.5rem 1.25rem; border: 1px solid rgba(255,255,255,0.5); color: var(--white); }
+  #contact { background: var(--black); color: var(--white); }
+  #contact .section-header { border-bottom-color: rgba(255,255,255,0.15); }
+  #contact h2 { color: var(--white); }
+  #contact .section-num { color: rgba(255,255,255,0.3); }
+  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+  .contact-intro { font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: rgba(255,255,255,0.6); line-height: 1.8; }
+  .contact-links { display: flex; flex-direction: column; }
+  .contact-link { font-family: var(--sans); font-size: 11px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; padding: 1.25rem 0; text-decoration: none; color: rgba(255,255,255,0.5); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; transition: color 0.2s; }
+  .contact-link:first-child { border-top: 1px solid rgba(255,255,255,0.1); }
+  .contact-link:hover { color: var(--white); }
+  .contact-link::after { content: '→'; font-size: 14px; }
+  footer { background: var(--black); color: rgba(255,255,255,0.3); padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); }
+  footer span { font-family: var(--sans); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; }
+  #project-page { padding-top: 4rem; min-height: 100vh; }
+  .proj-detail-hero { aspect-ratio: 21/9; background: var(--gray-1); border-bottom: 1px solid var(--black); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .proj-detail-hero img { width: 100%; height: 100%; object-fit: cover; }
+  .proj-detail-inner { max-width: 1100px; margin: 0 auto; padding: 4rem; }
+  .proj-back { font-family: var(--sans); font-size: 10px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray-3); display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 3rem; transition: color 0.2s; cursor: pointer; background: none; border: none; padding: 0; }
+  .proj-back:hover { color: var(--black); }
+  .proj-back::before { content: '←'; font-size: 14px; }
+  .proj-detail-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 5rem; align-items: start; }
+  .proj-detail-title { font-family: var(--sans); font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; line-height: 1.1; margin-bottom: 1rem; }
+  .proj-detail-meta { font-family: var(--sans); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-3); margin-bottom: 2rem; }
+  .proj-detail-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .badge-pub { font-family: var(--sans); font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.65rem; color: var(--blue); background: var(--blue-light); border: 1px solid rgba(74,114,176,0.3); }
+  .badge-award { font-family: var(--sans); font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.65rem; color: var(--gold); background: var(--gold-light); border: 1px solid rgba(138,106,26,0.3); }
+  .proj-detail-desc { font-family: var(--serif); font-size: 1.05rem; color: var(--gray-4); line-height: 1.85; }
+  .proj-detail-desc p { margin-bottom: 1.25rem; }
+  .proj-sidebar-block { margin-bottom: 2.5rem; }
+  .proj-sidebar-label { font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray-3); margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--gray-1); }
+  .proj-sidebar-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .proj-sidebar-tag { font-family: var(--sans); font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.65rem; background: var(--green-light); color: var(--green); border: 1px solid rgba(58,138,85,0.3); }
+  .proj-sidebar-desc-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .proj-sidebar-desc-tag { font-family: var(--sans); font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.6rem; color: var(--gray-4); border: 1px solid var(--gray-2); }
+  .proj-photos { display: grid; gap: 1px; background: var(--black); margin-top: 4rem; border: 1px solid var(--black); }
+  .proj-photo { background: var(--gray-1); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+  .proj-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .proj-photo:hover img { transform: scale(1.03); }
+  .proj-photo-caption { position: absolute; inset: 0; background: rgba(15,15,15,0.78); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; padding: 1.5rem; text-align: center; }
+  .proj-photo:hover .proj-photo-caption { opacity: 1; }
+  .proj-photo-caption-text { font-family: var(--sans); font-size: 10px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white); line-height: 1.6; }
+  .proj-nav { margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--black); }
+  .proj-nav-label { font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray-3); margin-bottom: 1.5rem; }
+  .proj-nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--white); border: 1px solid var(--black); }
+  .proj-nav-item { background: var(--white); aspect-ratio: 1/1; position: relative; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; overflow: hidden; }
+  .proj-nav-item:hover { background: var(--gray-1); }
+  .proj-nav-inner { text-align: center; }
+  .proj-nav-emoji { font-size: 1.75rem; margin-bottom: 0.4rem; }
+  .proj-nav-text { font-family: var(--sans); font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; color: var(--black); line-height: 1.3; padding: 0 0.5rem; }
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; } .nav-links { gap: 1.2rem; }
+    #intro { grid-template-columns: 1fr; }
+    .intro-left { border-right: none; border-bottom: 1px solid var(--black); padding: 4rem 1.5rem 3rem; }
+    .intro-right { padding: 3rem 1.5rem; }
+    .section-inner { padding: 3rem 1.5rem; }
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; gap: 0.5rem; padding: 1.5rem; }
+    .proj-detail-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .proj-detail-inner { padding: 3rem 1.5rem; }
+    .proj-nav-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) { .projects-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo" onclick="showMain()">Erik Mortensen</span>
+  <ul class="nav-links">
+    <li><a onclick="showMain(); setTimeout(function(){ document.getElementById('about').scrollIntoView({behavior:'smooth'}); }, 50);">About</a></li>
+    <li><a onclick="showMain(); setTimeout(function(){ document.getElementById('projects').scrollIntoView({behavior:'smooth'}); }, 50);">Projects</a></li>
+    <li><a onclick="showMain(); setTimeout(function(){ document.getElementById('contact').scrollIntoView({behavior:'smooth'}); }, 50);">Contact</a></li>
+  </ul>
+</nav>
+
+<div id="main-page">
+  <section id="intro">
+    <div class="intro-left">
+      <div class="profile-circle">
+        <img src="Erik Photo portfolio.jpg" alt="Erik Mortensen" onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('beforeend','<div class=\'profile-circle-placeholder\'>Add photo</div>')">
+      </div>
+      <div class="intro-name">Erik<br>Mortensen</div>
+      <div class="intro-role">Robotics Engineer — Boston, MA</div>
+    </div>
+    <div class="intro-right">
+      <p class="intro-tagline">Designing, building, and testing the hardware that makes robots move. Passionate about mechanical design, bio-inspired systems, and the space where engineering meets elegance.</p>
+      <div class="intro-ctas">
+        <button class="btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">Projects</button>
+        <a href="Resume_-_Erik_Mortensen.pdf" class="btn-primary" download>Resume</a>
+        <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</button>
+      </div>
+      <div class="intro-stats">
+        <div class="intro-stat"><span class="stat-k">Current role</span><span class="stat-v">Research Specialist · MIT</span></div>
+        <div class="intro-stat"><span class="stat-k">Education</span><span class="stat-v">MSc Robotics · EPFL</span></div>
+        <div class="intro-stat"><span class="stat-k">Status</span><span class="stat-v">Open to opportunities</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-inner">
+      <div class="section-header"><span class="section-num">01</span><h2>About</h2></div>
+      <div class="timeline-wrap">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+            <div class="tl-date">Feb 2026 — Present</div>
+            <div class="tl-title">Research Specialist</div>
+            <div class="tl-org-row">
+              <span class="tl-org">MIT AURA Lab · Boston, MA</span>
+              <div class="tl-logos"><a href="https://aura.mit.edu" target="_blank"><img src="logo_mitaura.svg" class="tl-logo" alt="MIT AURA"></a></div>
+            </div>
+            <div class="tl-desc">Continuing research on aerial-aquatic flapping-wing drones. Leading hardware design, simulation, and experimental validation towards a fully autonomous drone, while managing two undergraduate research assistants.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+            <div class="tl-date">Mar 2025 — Oct 2025</div>
+            <div class="tl-title">MSc Thesis — Flapping-Wing Drones</div>
+            <div class="tl-org-row">
+              <span class="tl-org">MIT AURA Lab · Boston, MA</span>
+              <div class="tl-logos"><a href="https://aura.mit.edu" target="_blank"><img src="logo_mitaura.svg" class="tl-logo" alt="MIT AURA"></a></div>
+            </div>
+            <span class="tl-badge">Publication pending</span>
+            <div class="tl-desc">Designed, built, and programmed a fully integrated one-wing prototype to study pitch control for improved locomotion efficiency in air and water.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+            <div class="tl-date">Jul — Dec 2024</div>
+            <div class="tl-title">Mechanical Engineering Intern</div>
+            <div class="tl-org-row">
+              <span class="tl-org">SharkNinja · Boston, MA</span>
+              <div class="tl-logos"><a href="https://www.sharkninja.com" target="_blank"><img src="logo_sharkninja.png" class="tl-logo" alt="SharkNinja"></a></div>
+            </div>
+            <span class="tl-badge"><a href="https://www.sharkninja.com/shark-stainforce-cordless-portable-spot-spill-cleaner/HX101.html?srsltid=AfmBOopvbIjEVkBIss86Bk4ovwI56TFRmB48Mx8LNCQdQQeia-sf_XFa" target="_blank" style="color:inherit;text-decoration:none;">Product Released</a></span>
+            <div class="tl-desc">Worked across the full product creation cycle on the Shark StainForce™ vacuum line — ideation through mass production. Optimized multiphase flow separation technology. Managed a small team of test engineers.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+            <div class="tl-date">Feb — Jul 2024</div>
+            <div class="tl-title">Sales &amp; Production Assistant</div>
+            <div class="tl-org-row">
+              <span class="tl-org">Docteur Gab's Brewery · Lausanne, Switzerland</span>
+              <div class="tl-logos"><a href="https://www.docteurgabs.ch/en/homepage/" target="_blank"><img src="logo_gabs.png" class="tl-logo" alt="Docteur Gab's"></a></div>
+            </div>
+            <div class="tl-desc">Part-time role as brand ambassador and production line worker at an independent craft brewery.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+            <div class="tl-date">Sep 2022 — Oct 2025</div>
+            <div class="tl-title">MSc in Robotics</div>
+            <div class="tl-org-row">
+              <span class="tl-org">EPFL · Lausanne, Switzerland</span>
+              <div class="tl-logos">
+                <a href="https://www.epfl.ch" target="_blank"><img src="logo_epfl.png" class="tl-logo" alt="EPFL"></a>
+                <a href="https://www.mit.edu/" target="_blank"><img src="logo_mit.png" class="tl-logo secondary" alt="MIT"></a>
+              </div>
+            </div>
+            <span class="tl-badge"><a href="https://arxiv.org/pdf/2504.19685" target="_blank" style="color:inherit;text-decoration:none;">Published — IEEE Robosoft 2025</a></span>
+            <div class="tl-desc">Specialization in Mobile Robotics. Coursework and semester projects spanning autonomous systems, legged locomotion, controls, bio-inspired design, and deep learning, with an emphasis on hands-on project work.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+            <div class="tl-date">Sep 2018 — Jul 2022</div>
+            <div class="tl-title">BSc in Mechanical Engineering</div>
+            <div class="tl-org-row">
+              <span class="tl-org">EPFL · Lausanne, Switzerland</span>
+              <div class="tl-logos">
+                <a href="https://www.epfl.ch" target="_blank"><img src="logo_epfl.png" class="tl-logo" alt="EPFL"></a>
+                <a href="https://www.chalmers.se" target="_blank"><img src="logo_chalmers.png" class="tl-logo secondary" alt="Chalmers"></a>
+              </div>
+            </div>
+            <div class="tl-desc">Foundation in mechanics, mathematics, physics, materials science, and programming. Includes one year on exchange at Chalmers University of Technology, Gothenburg, Sweden. Graduated with a strong interest in robotics and dynamic systems.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-inner" style="padding-bottom:2rem;">
+      <div class="section-header"><span class="section-num">02</span><h2>Projects</h2></div>
+    </div>
+    <div class="projects-grid">
+      <div class="proj-thumb" onclick="openProject('thesis')">
+        <img src="thesis_1.png" alt="Thesis" onerror="this.style.display='none'">
+        <div class="proj-thumb-placeholder" style="display:none">🦅</div>
+        <div class="proj-thumb-overlay"><div class="proj-thumb-title">Pitch Control of Flapping-Wings for Hybrid Locomotion</div><div class="proj-thumb-sub">MSc Thesis · MIT AURA Lab · 2025</div><div class="proj-thumb-cta">View project</div></div>
+      </div>
+      <div class="proj-thumb" onclick="openProject('tensegrity')">
+        <img src="tensegrity_1.png" alt="Tensegrity" onerror="this.style.display='none'">
+        <div class="proj-thumb-placeholder" style="display:none">🦿</div>
+        <div class="proj-thumb-overlay"><div class="proj-thumb-title">Tensegrity-based Robot Leg with Variable Stiffness</div><div class="proj-thumb-sub">Semester Project · LIS, EPFL · 2024</div><div class="proj-thumb-cta">View project</div></div>
+      </div>
+      <div class="proj-thumb" onclick="openProject('sharkninja')">
+        <img src="sharkninja_1.png" alt="SharkNinja" onerror="this.style.display='none'">
+        <div class="proj-thumb-placeholder" style="display:none">🌀</div>
+        <div class="proj-thumb-overlay">        <div class="proj-thumb-title">Multiphase Flow Separation — Shark StainForce™</div><div class="proj-thumb-sub">Internship · SharkNinja · 2024</div><div class="proj-thumb-cta">View project</div></div>
+      </div>
+      <div class="proj-thumb" onclick="openProject('robot')">
+        <img src="robot_1.png" alt="Robot" onerror="this.style.display='none'">
+        <div class="proj-thumb-placeholder" style="display:none">🤖</div>
+        <div class="proj-thumb-overlay"><div class="proj-thumb-title">Robot Competition — Autonomous Cleaning Robot</div><div class="proj-thumb-sub">Semester Project · Biorobotics Lab, EPFL · 2024</div><div class="proj-thumb-cta">View project</div></div>
+      </div>
+      <div class="proj-thumb" onclick="openProject('keepfocus')">
+        <img src="keepfocus_1.png" alt="Keep Focus" onerror="this.style.display='none'">
+        <div class="proj-thumb-placeholder" style="display:none">🔬</div>
+        <div class="proj-thumb-overlay"><div class="proj-thumb-title">Keep Focus — Auto-Focusing Magnifying Ocular</div><div class="proj-thumb-sub">Reconfigurable Robotics Lab, EPFL · 2023</div><div class="proj-thumb-cta">View project</div></div>
+      </div>
+      <div class="proj-thumb" onclick="openProject('chibbun')">
+        <img src="chibbun_1.png" alt="Chibbun" onerror="this.style.display='none'">
+        <div class="proj-thumb-placeholder" style="display:none">🪑</div>
+        <div class="proj-thumb-overlay"><div class="proj-thumb-title">Chibbun — Urban Seating for Elderly</div><div class="proj-thumb-sub">EPFL / ECAL · Lausanne &amp; Seoul · 2023</div><div class="proj-thumb-cta">View project</div></div>
+      </div>
+      <div class="proj-thumb" onclick="openProject('ddet')">
+        <img src="ddet_1.png" alt="3D Detection" onerror="this.style.display='none'">
+        <div class="proj-thumb-placeholder" style="display:none">🚗</div>
+        <div class="proj-thumb-overlay"><div class="proj-thumb-title">3D Object Detection via Monocular Camera</div><div class="proj-thumb-sub">EPFL · 2023</div><div class="proj-thumb-cta">View project</div></div>
+      </div>
+      <div class="proj-thumb" onclick="openProject('brewery')">
+        <img src="brewery_1.png" alt="Brewery" onerror="this.style.display='none'">
+        <div class="proj-thumb-placeholder" style="display:none">🍺</div>
+        <div class="proj-thumb-overlay"><div class="proj-thumb-title">Arenaz Micro-Brewery</div><div class="proj-thumb-sub">Personal Project · 2018 – Present</div><div class="proj-thumb-cta">View project</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-inner">
+      <div class="section-header"><span class="section-num">03</span><h2>Contact</h2></div>
+      <div class="contact-layout">
+        <p class="contact-intro">I'm actively looking for full-time hardware engineering roles in the Boston area. If you're building robots and need someone who cares about getting the physical system right, I'd love to connect.</p>
+        <div class="contact-links">
+          <a href="mailto:erik_m@mit.edu" class="contact-link">erik_m@mit.edu</a>
+          <a href="tel:+16173354178" class="contact-link">+1 (617) 335 41 78</a>
+          <a href="www.linkedin.com/in/erik-mortensen-engineer" class="contact-link" target="_blank">LinkedIn</a>
+          <a href="Resume_-_Erik_Mortensen.pdf" class="contact-link" download>Resume PDF</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Erik Mortensen — Robotics Engineer</span>
+    <span>Boston, MA, USA — Lausanne, Switzerland</span>
+  </footer>
+</div>
+
+<div id="project-page">
+  <div class="proj-detail-hero"><div id="proj-hero-img"></div></div>
+  <div class="proj-detail-inner">
+    <button class="proj-back" onclick="showMain()">Back to main thread</button>
+    <div class="proj-detail-grid">
+      <div>
+        <div id="proj-title" class="proj-detail-title"></div>
+        <div id="proj-meta" class="proj-detail-meta"></div>
+        <div id="proj-badges" class="proj-detail-badges"></div>
+        <div id="proj-desc" class="proj-detail-desc"></div>
+      </div>
+      <div>
+        <div class="proj-sidebar-block">
+          <div class="proj-sidebar-label">Topics</div>
+          <div id="proj-desc-tags" class="proj-sidebar-desc-tags"></div>
+        </div>
+        <div class="proj-sidebar-block">
+          <div class="proj-sidebar-label">Skills &amp; Tools</div>
+          <div id="proj-skill-tags" class="proj-sidebar-tags"></div>
+        </div>
+      </div>
+    </div>
+    <div class="proj-photos" id="proj-photos"></div>
+    <div class="proj-nav">
+      <div class="proj-nav-label">Other projects</div>
+      <div id="proj-nav-grid" class="proj-nav-grid"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var P = {
+  thesis: {
+    e:"🦅", t:"Pitch Control of Flapping-Wings for Efficient Hybrid Locomotion",
+    m:"Mar 2025 - Present · MSc Thesis, MIT AURA Lab · Boston, MA",
+    b:[{x:"Publication Pending",y:"pub"}],
+    dt:["Aerial-Aquatic","Flapping Wings","Fluid Mechanics","Bio-inspired Robotics"],
+    st:["Mech. Design","Machining","3D Printing","Embedded Systems","Field Oriented Control","Team Management","Python","C++"],
+    i:["thesis_hero.png","thesis_1.png"],
+    pc:2, ph:[{s:"thesis_2.gif",a:"1/1",c:"2-DoF wing motion in air"},{s:"thesis_3.gif",a:"1/1",c:"One-wing prototype during underwater testing"}],
+    d:"<p>This project aims to improve the energetic efficiency of aerial-aquatic flapping-wing drones by introducing wing pitch as a new degree of freedom. After designing, building and programming a fully integrated one-wing prototype, the wing motion was optimized to maximize locomotion efficiency in both air and underwater.</p><p>The resulting prototype integrates a custom mechanical design with a micro-controller and motor drivers, allowing precise field-oriented control of the wing actuation. The results will soon be published in a scientific paper.</p><p>Currently working on an autonomous two-winged prototype toward a fully flying system, managing two undergraduate research assistants on the project.</p>"
+  },
+  tensegrity: {
+    e:"🦿", t:"Tensegrity-based Robot Leg with Variable Stiffness",
+    m:"Sep 2023 - Jan 2024 · Semester Project, Laboratory of Intelligent Systems, EPFL",
+    b:[{x:"Published — IEEE Robosoft 2025",y:"pub",l:"https://arxiv.org/pdf/2504.19685"}],
+    dt:["Tensegrity","Soft Robotics","Bio-inspired"],
+    st:["Mech. Design","3D Printing","C++","MATLAB"],
+    i:["tensegrity_hero.png","tensegrity_1.png"],
+    pc:2, ph:[{s:"tensegrity_2.gif",a:"1/1",c:"Variable stiffness mechanism"},{s:"tensegrity_3.gif",a:"1/1",c:"Full range of motion"},{s:"tensegrity_4.gif",a:"1/1",c:"Low stiffness: high compliance"},{s:"tensegrity_5.gif",a:"1/1",c:"High stiffness: better load bearing and shock absorption capabilities"}],
+    d:"<p>During this project, a tensegrity-based fully actuated robotic leg was designed, built, and tested for use in robot locomotion. The goal was to improve the shock absorption capabilities and versatility of the robotic leg through a bio-inspired mechanism that actively varies the compliance of its joints.</p><p>The resulting prototype uses tensegrity principles to distribute forces across the structure, allowing passive compliance alongside active stiffness modulation. The results were presented at the IEEE Robosoft 2025 conference and published online.</p>"
+  },
+  sharkninja: {
+    e:"🌀", t:"Multiphase Flow Separation — Shark StainForce™",
+    m:"Jul - Dec 2024 · Mechanical Engineering Internship · SharkNinja, Boston, MA",
+    b:[{x:"Product Released",y:"pub",l:"https://www.sharkninja.com/shark-stainforce-cordless-portable-spot-spill-cleaner/HX101.html?srsltid=AfmBOopvbIjEVkBIss86Bk4ovwI56TFRmB48Mx8LNCQdQQeia-sf_XFa"}],
+    dt:["Fluid Mechanics","Product Development"],
+    st:["SolidWorks","Creo","Python","SLA 3D Printing","Team Management","Optimization"],
+    i:["sharkninja_hero.gif","sharkninja_1.png"],
+    pc:2, ph:[{s:"sharkninja_2.png",a:"1/1",c:"Extracts spilled liquid out of any fabric"},{s:"sharkninja_3.png",a:"1/1",c:"The rotary multiphase flow separator"}],
+    d:"<p>Full-time internship on the R&D team of Shark's Hydro Vacuum Cleaners. The project involved working across the entire consumer product creation cycle — from ideation, designing, and prototyping through to validation and mass production.</p><p>Responsible for optimizing the multiphase flow separation technology on the new Shark StainForce™, through design iterations, prototyping, and rigorous testing. Collaborated closely with people from different teams: industrial designers, marketing, and legal.</p><p>Also managed a small team of test engineers throughout the validation phase, coordinating test protocols and reporting results to the broader R&D team.</p>"
+  },
+  robot: {
+    e:"🤖", t:"Robot Competition — Autonomous Cleaning Robot",
+    m:"Feb - Jun 2024 · Semester Project, Biorobotics Laboratory, EPFL",
+    b:[{x:"2nd Place + Audience Award",y:"award"}],
+    dt:["Autonomous Robot","Mech. Design","Embedded"],
+    st:["Fusion 360","3D Printing","Laser Cutting","C++","Python"],
+    i:["robot_hero.gif","robot_1.png"],
+    pc:2, ph:[{s:"robot_2.gif",a:"1/1",c:"The compliant harvesting mechanism adapts to the shape of any object"},{s:"robot_3.gif",a:"1/1",c:"ToF sensors and image recognition to navigate and avoid obstacles"},{s:"robot_4.png",a:"1/1",c:""},{s:"robot_5.jpg",a:"1/1",c:"Fully autonomous and ready for action"}],
+    d:"<p>In a team of 3, competing against 4 other teams, this interdisciplinary project tasked students with the design, construction, and programming of an autonomous cleaning robot. The robot had to detect and gather plastic bricks in a 64m² arena featuring obstacles and various terrains, before bringing them back to a specific location.</p><p>I oversaw the mechanical and electrical design and integration of the robot, and also contributed significantly to programming the state machine and obstacle avoidance algorithms. The project concluded with a live competition — our robot won second place, along with the audience award.</p>"
+  },
+  keepfocus: {
+    e:"🔬", t:"Keep Focus — Auto-Focusing Magnifying Ocular",
+    m:"Nov 2022 - Jul 2023 · Reconfigurable Robotics Lab, EPFL",
+    b:[{x:"Concept in development as a startup",y:"pub"}],
+    dt:["Optics","Product Design","Medical"],
+    st:["Fusion 360","3D Printing","Arduino","Product Development", "Teamwork"],
+    i:["keepfocus_hero.gif","keepfocus_1.png"],
+    pc:2, ph:[{s:"keepfocus_3.gif",a:"9/10.15",r:2,c:"Zoom lens with automatic focus"},{s:"keepfocus_2.gif",a:"16/9",c:"Minimal focal distance of 10mc"},{s:"keepfocus_4.jpg",a:"16/9",c:"Fully Autonomous - battery powered"}],
+    d:"<p>In a group of five, we designed and produced a prototype of a magnifying ocular that automatically adjusts the focus to the object of interest. This project aimed to improve the working conditions of surgeons and watchmakers, carried out in the scope of the course Mechanical Product Design and Development (ME-410).</p><p>The concept is currently being developed as a startup, and the core mechanism — combining optical design with embedded sensing and actuation — remains a promising direction for assistive tools in precision work environments.</p>"
+  },
+  chibbun: {
+    e:"🪑", t:"Chibbun — Urban Seating for Elderly",
+    m:"Nov 2022 - Aug 2023 · EPFL / ECAL · Lausanne and Seoul",
+    b:[],
+    dt:["Industrial Design","Sustainability","Multi-disciplinary"],
+    st:["Prototyping","Communication","Teamwork", "Fusion 360"],
+    i:["chibbun_hero.png","chibbun_1.png"],
+    pc:2, ph:[{s:"chibbun_2.jpg",a:"9/16",c:"Tested and approved by elderly participants in the streets of Seoul"},{s:"chibbun_3.jpg",a:"9/16",c:"Can easily be strapped to street lighting or any pole"}],
+    d:"<p>In a team composed of engineers and industrial designers, we developed a public chair that can be easily installed in cities to promote elderly inclusivity in urban areas. This project was part of the course Design for Sustainability (HUM-398) at EPFL and ECAL.</p><p>Selected to participate in the KimCheese exchange program between four universities in Switzerland and South Korea, we had the opportunity to present and test our prototype in Seoul during summer 2023 — a valuable experience in cross-cultural and multi-disciplinary design.</p>"
+  },
+  ddet: {
+    e:"🚗", t:"3D Object Detection via Monocular Camera",
+    m:"Nov 2022 - Jul 2023 · EPFL",
+    b:[],
+    dt:["Deep Learning","Computer Vision","Autonomous Vehicles"],
+    st:["Python","Image Processing","Reinforcement Learning"],
+    i:["ddet_hero.jpg","ddet_1.png"],
+    pc:1, ph:[{s:"ddet_2.jpg",a:"4/1",c:"The model finds the cars and determines their position, orientation and size"},{s:"ddet_3.jpg",a:"4/1",c:"When a car is found, a blue box is drawn around it for visualization"}],
+    d:"<p>Implemented and trained a neural network capable of recognizing cars, their 3D location, and their orientation from 2D images — intended for use in autonomous robot navigation. This project was carried out in a group of two, as part of the Deep Learning for Autonomous Vehicles course (CIVIL-459) at EPFL.</p><p>The work involved data preprocessing, model architecture selection, training pipeline development, and evaluation on standard autonomous driving benchmarks.</p>"
+  },
+  brewery: {
+    e:"🍺", t:"Arenaz Micro-Brewery",
+    m:"2018 – Present · Personal Project",
+    b:[{x:"Instagram Page",y:"pub",l:"https://www.instagram.com/brasserie__arenaz?igsh=MW5lZmlxem5vb241Mw=="}],
+    dt:["Beer Brewing","Personal Project"],
+    st:["Fermentation","PID Control","Embedded Systems","Patience"],
+    i:["brewery_hero.jpg","brewery_1.png"],
+    pc:2, ph:[{s:"brewery_2.jpg",a:"2/3",c:"More than 7 years of brewing experience and 70 original recipes"},{s:"brewery_3.jpg",a:"2/3",c:"Always from scratch with quality ingredients"},{s:"brewery_4.jpg",a:"9/16",c:"Controlling fermentation time, temperature and maturation"},{s:"brewery_5.jpg",a:"9/16",c:"Driven by curiosity and the love of good things"}],
+    d:"<p>Co-founded a micro-brewery with two childhood friends with the shared ambition of brewing the best beer in the world. Together, we learned and perfected the art of brewing beer and other fermented beverages entirely from scratch.</p><p>Creating and continuously evolving our own recipes, we have brewed over 70 different batches and explored almost every style of beer. The project has been as much about craftsmanship as it has been about engineering — we applied our technical skills to improve our setup, implementing PID controllers for precise temperature control and smart embedded devices for real-time fermentation vitals monitoring.</p>"
+  }
+};
+
+var K = ["thesis","tensegrity","sharkninja","robot","keepfocus","chibbun","ddet","brewery"];
+
+function showMain() {
+  document.getElementById("main-page").style.display = "block";
+  document.getElementById("project-page").style.display = "none";
+  window.scrollTo(0, 0);
+}
+
+function openProject(key) {
+  var p = P[key];
+  if (!p) return;
+
+  document.getElementById("proj-title").textContent = p.t;
+  document.getElementById("proj-meta").textContent = p.m;
+
+  var bHtml = "";
+  for (var i = 0; i < p.b.length; i++) {
+    var b = p.b[i];
+    var inner = b.l ? "<a href='" + b.l + "' target='_blank' style='color:inherit;text-decoration:none;'>" + b.x + "</a>" : b.x;
+    bHtml += "<span class='badge-" + (b.y === "award" ? "award" : "pub") + "'>" + inner + "</span>";
+  }
+  document.getElementById("proj-badges").innerHTML = bHtml;
+  document.getElementById("proj-desc").innerHTML = p.d;
+
+  var tHtml = "";
+  for (var i = 0; i < p.dt.length; i++) tHtml += "<span class='proj-sidebar-desc-tag'>" + p.dt[i] + "</span>";
+  document.getElementById("proj-desc-tags").innerHTML = tHtml;
+
+  var sHtml = "";
+  for (var i = 0; i < p.st.length; i++) sHtml += "<span class='proj-sidebar-tag'>" + p.st[i] + "</span>";
+  document.getElementById("proj-skill-tags").innerHTML = sHtml;
+
+  document.getElementById("proj-hero-img").innerHTML = "<img src='" + p.i[0] + "' alt='" + key + "'>";
+
+  var photosEl = document.getElementById("proj-photos");
+  photosEl.style.gridTemplateColumns = "repeat(" + p.pc + ", 1fr)";
+  var pHtml = "";
+  for (var i = 0; i < p.ph.length; i++) {
+    var ph = p.ph[i];
+    var span = ph.r ? "grid-row:span " + ph.r + ";" : "";
+    var caption = ph.c ? "<div class='proj-photo-caption'><div class='proj-photo-caption-text'>" + ph.c + "</div></div>" : "";
+    pHtml += "<div class='proj-photo' style='aspect-ratio:" + ph.a + ";" + span + "'><img src='" + ph.s + "' alt='photo'>" + caption + "</div>";
+  }
+  photosEl.innerHTML = pHtml;
+
+  var nHtml = "";
+  for (var i = 0; i < K.length; i++) {
+    if (K[i] === key) continue;
+    var q = P[K[i]];
+    var short = q.t;
+    nHtml += "<div class='proj-nav-item' onclick=\"openProject('" + K[i] + "')\">"
+           + "<img src='" + q.i[1] + "' style='width:100%;height:100%;object-fit:cover;position:absolute;inset:0;' onerror=\"this.style.display='none'\">"
+           + "<div class='proj-nav-inner' style='position:relative;z-index:1;background:rgba(245,243,238,0.85);padding:0.4rem 0.3rem;width:100%;'>"
+           + "<div class='proj-nav-text'>" + short + "</div></div></div>";
+  }
+  document.getElementById("proj-nav-grid").innerHTML = nHtml;
+
+  document.getElementById("main-page").style.display = "none";
+  document.getElementById("project-page").style.display = "block";
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
